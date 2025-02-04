@@ -1,7 +1,7 @@
 import requests
 import json
 
-token = "1a0b777d-c257-45ad-bdbd-dc3daa85bbc5" # token de connexion à l'API
+token = "token" # token de connexion à l'API
 
 tabData_journey = [] # tab qui va contenir les données de vehicle_journeys
 tabData_disruptions = [] # tab qui va contenir les données de disruptions
