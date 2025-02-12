@@ -1,2 +1,5 @@
 #ignorer les json
 *.json
+
+#ignore les db
+*.db
