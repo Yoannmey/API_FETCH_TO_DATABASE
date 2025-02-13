@@ -1,5 +1,8 @@
 #ignorer les json
 *.json
 
-#ignore les db
+#ignorer les db
 *.db
+
+#ignorer le pycache
+*.pyc

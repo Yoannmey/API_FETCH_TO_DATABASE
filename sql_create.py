@@ -55,12 +55,10 @@ def create_sql():
         );
 
         CREATE TABLE station (
-            id_station INT PRIMARY KEY,
+            id_station INTEGER PRIMARY KEY AUTOINCREMENT,
             name_station TEXT,
-            zip_code INT,
-            insee INT,
-            latitude REAL,
             longitude REAL,
+            latitude REAL,
             id_line INT,
             position INT,
             FOREIGN KEY (id_line) REFERENCES line(id_line)
