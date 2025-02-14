@@ -5,4 +5,4 @@
 *.db
 
 #ignorer le pycache
-*.pyc
+__pycache__/

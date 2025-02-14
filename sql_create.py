@@ -12,8 +12,8 @@ def create_sql():
             name VARCHAR(50),
             status VARCHAR(50),
             message VARCHAR(50),
-            amended_arrival_time VARCHAR(50),
             amended_departure_time VARCHAR(50),
+            amended_arrival_time VARCHAR(50),
             PRIMARY KEY(id_disruption)
         );
 
@@ -27,8 +27,8 @@ def create_sql():
 
         CREATE TABLE train (
             id_train INTEGER PRIMARY KEY AUTOINCREMENT,
-            base_arrival_time INT,
             base_departure_time INT,
+            base_arrival_time INT,
             train_number INT,
             departure_date INT,
             id_disruption TEXT,
