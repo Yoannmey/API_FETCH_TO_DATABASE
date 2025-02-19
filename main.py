@@ -1,5 +1,6 @@
 from API_to_json import *
 from sql_create import *
+from json_to_db import *
 
 try: # Vérification de l'existance du fichier json, importation depuis l'API si il n'existe pas 
     with open('json/vehicle_journeys.json') as file:
@@ -15,10 +16,13 @@ except FileNotFoundError:
     disruptions_to_json()
     print("Importation de disruptions.json en cours")
 
-try: # Vérification de l'existance de la base de donnée, exécution du script sql si elle n'existe pas
+try: # Vérification de l'existance de la base de donnée, exécution du script sql, et du script d'insert si elle n'existe pas
     with open('db_sncf.db') as file:
        print("La database a été trouvée")
 except FileNotFoundError: 
+    print("Création de la database, et insertion des données...")
     create_sql()
-    print("Création de la database")
+    json_to_db_first()
+    print("Terminé")
+    
 
