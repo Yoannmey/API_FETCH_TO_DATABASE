@@ -17,7 +17,7 @@ except FileNotFoundError:
     print("Importation de disruptions.json en cours")
 
 try: # Vérification de l'existance de la base de donnée, exécution du script sql, et du script d'insert si elle n'existe pas
-    with open('db_sncf.db') as file:
+    with open('db_sncf_v5.db') as file:
        print("La database a été trouvée")
 except FileNotFoundError: 
     print("Création de la database, et insertion des données...")

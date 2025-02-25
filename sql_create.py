@@ -1,7 +1,7 @@
 import sqlite3 
 
 def create_sql(): # création de la database avec les tables requises
-    con = sqlite3.connect("db_sncf.db")
+    con = sqlite3.connect("db_sncf_v5.db")
 
     cur = con.cursor()
 

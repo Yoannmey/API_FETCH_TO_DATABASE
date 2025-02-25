@@ -1,6 +1,5 @@
 import json
 import sqlite3
-from pprint import pprint
 
 def json_to_db_first(): 
 
@@ -11,7 +10,7 @@ def json_to_db_first():
     file_disruption = open("json/disruptions.json")
     disrupt = json.load(file_disruption)
 
-    con = sqlite3.connect("db_sncf.db")
+    con = sqlite3.connect("db_sncf_v5.db")
     cursor = con.cursor()
 
     id = 1
@@ -58,7 +57,15 @@ def json_to_db_first():
                 id_disruption = disruption[0]["id"]
             else:
                 id_disruption = "NULL"
-            fill_train(cursor, departure_time, arrival_time, train_number, date, id_disruption, id)
+            
+            cursor.execute('''
+                SELECT 1 FROM train
+                WHERE base_departure_time = ? AND base_arrival_time = ? AND train_number = ? AND departure_date = ? AND id_disruption = ? AND id_line = ?
+                ''', (departure_time, arrival_time, train_number, date, id_disruption, id )) # Verification pour eviter les doublons 
+                
+            if not cursor.fetchone():
+
+                fill_train(cursor, departure_time, arrival_time, train_number, date, id_disruption, id)
 
         for retard in element.get("disruptions",[]):  # Recherche du dictionnaire disruptions dans le fichier vehicle_journeys et remplissage de la db
             message = retard.get("messages", [])
@@ -73,7 +80,7 @@ def json_to_db_first():
                 ''', (id_disruption,))
 
             if not cursor.fetchone():
-                
+    
                 name_disruption = severity["name"]
                 if len(message) > 0:  # Vérification que la liste n'est pas vide pour éviter une erreur
                     message_disruption = message[0]["text"]
@@ -92,7 +99,7 @@ def json_to_db_first():
                         departure_time_disruption = "NULL"
 
                     if "amended_arrival_time" in impacted[0]["impacted_stops"][-1]:
-                        arrival_time_disruption = impacted[0]["impacted_stops"][-1]["amended_arrival_time"]
+                                                                                                        arrival_time_disruption = impacted[0]["impacted_stops"][-1]["amended_arrival_time"]
                     else:
                         arrival_time_disruption = "NULL"
 
@@ -121,13 +128,12 @@ def json_to_db_first():
                 arrival_time_disruption = "NULL"
 
                 fill_disruption(cursor, id_disruption, name_disruption, message_disruption, status, departure_time_disruption, arrival_time_disruption)
-            else:
-                print("non")
-    con.commit()     
+    
+    con.commit()
 
     file_journey.close()
     cursor.close()
-    con.close() 
+    con.close()
 
 def fill_line(cursor, id, departure_train_station, arrival_train_station): # Insert dans la table line
 
